@@ -3,6 +3,8 @@ package com.armada.fuerza;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.armada.fuerza.enums.TipoDeBatalla;
+
 public class Batalla {
 	private String nombre;
 	private Double latitud;

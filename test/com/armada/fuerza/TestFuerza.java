@@ -4,6 +4,23 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.armada.fuerza.enums.TipoDeBatalla;
+import com.armada.fuerza.excepciones.VehiculoIncompatible;
+import com.armada.fuerza.excepciones.VehiculoInexistente;
+import com.armada.fuerza.interfaces.Acuatico;
+import com.armada.fuerza.interfaces.Anfibio;
+import com.armada.fuerza.interfaces.HidroAvion;
+import com.armada.fuerza.interfaces.Terrestre;
+import com.armada.fuerza.interfaces.Volador;
+import com.armada.fuerza.vehiculos.Avion;
+import com.armada.fuerza.vehiculos.Camion;
+import com.armada.fuerza.vehiculos.Destructor;
+import com.armada.fuerza.vehiculos.Portaviones;
+import com.armada.fuerza.vehiculos.Submarino;
+import com.armada.fuerza.vehiculos.Tanque;
+import com.armada.fuerza.vehiculos.VehiculoAnfibio;
+import com.armada.fuerza.vehiculos.VehiculoHidroAvion;
+
 public class TestFuerza {
 	
 	@Test

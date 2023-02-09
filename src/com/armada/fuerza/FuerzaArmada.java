@@ -6,6 +6,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.armada.fuerza.enums.TipoDeBatalla;
+import com.armada.fuerza.excepciones.VehiculoIncompatible;
+import com.armada.fuerza.excepciones.VehiculoInexistente;
+import com.armada.fuerza.interfaces.Acuatico;
+import com.armada.fuerza.interfaces.Terrestre;
+import com.armada.fuerza.interfaces.Volador;
+
 public class FuerzaArmada {
 
 	private Set<Vehiculo> convoy;
