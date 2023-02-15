@@ -1,6 +1,5 @@
 package com.armada.fuerza;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -36,45 +35,67 @@ public class FuerzaArmada {
 		batallas.put(nombre, batalla );
 	}
 
-	public Object getBatalla(String nombre) {
+	public Batalla getBatalla(String nombre) {
 		return batallas.get(nombre);
 	}
 
-	public boolean enviarALaBatalla(String nombreBatalla, Integer codigoVehiculo) throws VehiculoInexistente, VehiculoIncompatible {
+	public TipoDeBatalla getTipoDeBatallaPorSuNombre(String nombreBatalla) {
+		TipoDeBatalla tipoBatalla = batallas.get(nombreBatalla).getTipo();
+		return tipoBatalla;
+	}
 	
-		TipoDeBatalla tipoBatallaAEnviar = batallas.get(nombreBatalla).getTipo();
-		
+	public Vehiculo buscarVehiculoPorCodigo(Integer codigoVehiculo) {
+		Vehiculo vehiculoADevolver= null;
 		for (Vehiculo vehiculo : convoy) {
-			if ( vehiculo.getCodigo() == codigoVehiculo) {
-				Vehiculo vehiculoAEnviar= vehiculo;
-				switch (tipoBatallaAEnviar) {
-				case ACUATICA:
-					if (vehiculoAEnviar instanceof Acuatico) {
-						return true;
-					} else {
-						throw new VehiculoIncompatible("No se puede asignar este vehiculo a la batalla "  + codigoVehiculo);
-					}
-				case AEREA:
-					if (vehiculoAEnviar instanceof Volador) {
-						return true;
-					} else {
-						throw new VehiculoIncompatible("No se puede asignar este vehiculo a la batalla "  + codigoVehiculo);
-					}
-				case TERRESTRE:
-					if (vehiculoAEnviar instanceof Terrestre) {
-						return true;
-					} else {
-					throw new VehiculoIncompatible("No se puede asignar este vehiculo a la batalla "  + codigoVehiculo);
-				}
-				default:
-					System.out.println("Batalla no encontrada " + nombreBatalla);
-					break;
-				}
-			} else {
-				throw new VehiculoInexistente("Vehiculo no encontrado " + codigoVehiculo);
+			if ( vehiculo.getCodigo().equals(codigoVehiculo)) {
+				vehiculoADevolver= vehiculo;
 			}
 		}
-		return false;
+		return vehiculoADevolver;
+	}
+	
+	
+	public boolean verificarQueElVehiculoSeaAptoParaLaBatalla(TipoDeBatalla tipoBatallaAEnviar, Vehiculo vehiculoAEnviar) throws VehiculoIncompatible {
+		
+		switch (tipoBatallaAEnviar) {
+		
+		case ACUATICA:
+			if (vehiculoAEnviar instanceof Acuatico) {
+				return true;
+			} else {
+				throw new VehiculoIncompatible("No se puede asignar este vehiculo a la batalla. [Nombre "  + vehiculoAEnviar.getNombre() + "] Codigo " + vehiculoAEnviar.getCodigo() );
+			}
+			
+		case AEREA:
+			if (vehiculoAEnviar instanceof Volador) {
+				return true;
+			} else {
+				throw new VehiculoIncompatible("No se puede asignar este vehiculo a la batalla.[Nombre "  + vehiculoAEnviar.getNombre() + "] Codigo " + vehiculoAEnviar.getCodigo() );
+			}
+			
+		case TERRESTRE:
+			if (vehiculoAEnviar instanceof Terrestre) {
+				return true;
+			} else {
+			throw new VehiculoIncompatible("No se puede asignar este vehiculo a la batalla. [Nombre "  + vehiculoAEnviar.getNombre() + "] Codigo " + vehiculoAEnviar.getCodigo());
+		}
+			
+		default:
+			System.out.println("Batalla no encontrada");
+			return false;
+		}
+	}
+	
+	public boolean enviarALaBatalla(String nombreBatalla, Integer codigoVehiculo) throws VehiculoInexistente, VehiculoIncompatible {
+	
+		TipoDeBatalla tipoBatallaAEnviar= getTipoDeBatallaPorSuNombre(nombreBatalla);
+		Vehiculo vehiculoAEnviar= buscarVehiculoPorCodigo(codigoVehiculo);
+		
+		if ( vehiculoAEnviar != null && tipoBatallaAEnviar != null) {
+			verificarQueElVehiculoSeaAptoParaLaBatalla(tipoBatallaAEnviar, vehiculoAEnviar);
+			return true;
+		} else {
+			throw new VehiculoInexistente("Vehiculo no encontrado: Codigo= " + codigoVehiculo);
+		}
 	} 
-
 }

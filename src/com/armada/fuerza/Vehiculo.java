@@ -2,15 +2,15 @@ package com.armada.fuerza;
 
 public abstract class Vehiculo {
 	
-	private int codigo;
+	private Integer codigo;
 	private String nombre;
 	
-	public Vehiculo(int codigo, String nombre) {
+	public Vehiculo(Integer codigo, String nombre) {
 		this.codigo = codigo;
 		this.nombre = nombre;
 	}
 
-	public int getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 
@@ -22,7 +22,7 @@ public abstract class Vehiculo {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + codigo;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 
@@ -33,7 +33,10 @@ public abstract class Vehiculo {
 		if (obj == null)
 			return false;
 		Vehiculo other = (Vehiculo) obj;
-		if (codigo != other.codigo)
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
@@ -42,6 +45,4 @@ public abstract class Vehiculo {
 	public String toString() {
 		return "Vehiculo [codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
-	
-	
 }
